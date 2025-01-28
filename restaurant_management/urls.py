@@ -18,4 +18,6 @@ urlpatterns = [
 
     path('api/restaurants/', include('apps.restaurants.urls')),
     path('api/menus/', include('apps.menus.urls')),
+    path('api/bookings/', include('apps.bookings.urls')),
+
 ]
