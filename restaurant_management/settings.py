@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    'corsheaders',
 
     'apps.accounts',
     'apps.restaurants',
@@ -45,6 +46,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'restaurant_management.urls'
@@ -132,3 +135,11 @@ REST_FRAMEWORK = {
     ),
 
 }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+
+    "http://127.0.0.1:3000"
+]
+CORS_ALLOW_ALL_ORIGINS = True
