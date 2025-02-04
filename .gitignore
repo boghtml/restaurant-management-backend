@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/.venv
+/.env
+env
+/.vscode
+/*/.env
+__pycache__/
+django.log
