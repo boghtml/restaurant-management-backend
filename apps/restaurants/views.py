@@ -28,7 +28,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 class RestaurantTableViewSet(viewsets.ModelViewSet):
     queryset = RestaurantTable.objects.all()
     serializer_class = RestaurantTableSerializer
-    permission_classes = [IsAdminOrReadOnly]  # GET для всіх, зміни - лише admin
+    permission_classes = [IsAdminOrReadOnly]  
 
     @transaction.atomic
     @action(detail=True, methods=['post'], url_path='occupy')

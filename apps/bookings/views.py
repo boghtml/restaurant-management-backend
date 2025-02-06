@@ -34,17 +34,13 @@ class BookingViewSet(viewsets.ModelViewSet):
         1) Присвоюємо user = request.user, status = 'Pending'
         2) Перевіряємо, чи немає конфлікту за часом (±15хв, +30хв)
         """
-        # Перевіримо на конфлікт:
         data = serializer.validated_data
         restaurant_table = data['restaurant_table']
         new_booking_time = data['booking_time']
 
-        # Часовий діапазон: [booking_time - 15 хв, booking_time + 30 хв]
         start_check = new_booking_time - timedelta(minutes=15)
         end_check = new_booking_time + timedelta(minutes=30)
 
-        # Перевіримо в БД, чи вже існує бронювання на цей столик,
-        # час якого потрапляє у наш проміжок (перетинається)
         conflict_exists = Booking.objects.filter(
             restaurant_table=restaurant_table,
             booking_time__range=(start_check, end_check)
@@ -53,7 +49,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         if conflict_exists:
             raise ValidationError("Столик уже заброньовано на даний час (з урахуванням 15хв до та 30хв після).")
 
-        # Якщо конфлікту немає:
         serializer.save(
             user=self.request.user,
             status='Pending'
@@ -65,7 +60,6 @@ class BookingViewSet(viewsets.ModelViewSet):
         або залишити для update (наприклад, зміна часу, столика),
         але без призначення table.status.
         """
-        # Перевіримо чи admin
         if getattr(request.user, 'role', None) != 'admin':
             return Response(
                 {"detail": "Only admin can update booking."},
